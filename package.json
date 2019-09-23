@@ -1,0 +1,27 @@
+{
+  "name": "accounts-auto-seller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "electron": "^6.0.10",
+    "electron-store": "^5.0.0",
+    "puppeteer": "^1.20.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron .",
+    "package-win": "electron-packager . lolz-auto-contests-participate --overwrite --platform=win32 --icon=assets/icons/icon.ico --prune=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FifthWye/Accounts-auto-seller.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FifthWye/Accounts-auto-seller/issues"
+  },
+  "homepage": "https://github.com/FifthWye/Accounts-auto-seller#readme"
+}

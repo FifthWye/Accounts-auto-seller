@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Auto contests participate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <h1 lass="navbar-brand">Auto-contests</h1>
+    </nav>
+    <div class="container col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <form onsubmit="return false" class="lzt" novalidate>
+                    <img class="logo" src="./assets/lzt_logo.png" alt="">
+                    <div id="userDataLZT">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="username" class="form-control" id="username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                        </div>
+                        <input type="submit" name="submit" id="lztLogIn" value="Log in" class="btn btn-lolz">
+                    </div>
+                    <div id="authenticationCode">
+                        <div class="form-group">
+                            <label>Code</label>
+                            <input type="text" class="form-control" id="code" placeholder="Code" maxlength="6" required>
+                        </div>
+                        <input type="submit" id="sendCode" value="Send" class="btn btn-lolz">
+                    </div>
+                    <div id="panel">
+                        <input type="submit" id="stopAdsParse" value="Get data about accs : Stop" class="btn btn-stop">
+                        <input type="submit" id="startAdsParse" value="Get data about accs : Start"
+                            class="btn btn-lolz">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form onsubmit="return false" class="funPay" novalidate>
+                    <img class="logo" src="./assets/funpay_logo.svg" alt="">
+                    <div id="userDataFunPay">
+                        <div class="form-group">
+
+                            <label>Username</label>
+                            <input type="username" class="form-control" id="username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                        </div>
+                        <input type="submit" name="submit" id="submit" value="Start" class="btn btn-lolz">
+                    </div>
+                    <div id="authenticationCode">
+                        <div class="form-group">
+                            <label>Code</label>
+                            <input type="text" class="form-control" id="code" placeholder="Code" maxlength="6" required>
+                        </div>
+                        <input type="submit" id="sendCode" value="Send" class="btn btn-lolz">
+                    </div>
+                    <div id="panel">
+                        <div class="form-group">
+                            <label>Frequency</label>
+                            <select id="frequency">
+                                <option value="1" selected="selected">Run one iteration</option>
+                                <option value="2">Run every min</option>
+                                <option value="3">Repeat every 5 min</option>
+                                <option value="4">Repeat every 30 min</option>
+                                <option value="5">Repeat every 1 h</option>
+                            </select>
+                        </div>
+                        <input type="submit" id="stop" value="Stop" class="btn btn-stop">
+                        <input type="submit" id="startAdsParse" value="Start" class="btn btn-lolz">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="logs">
+                    <div class="form-group">
+                        <textarea id="logsData" class="form-control" rows="10" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</html>
