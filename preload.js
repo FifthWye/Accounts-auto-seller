@@ -3,12 +3,11 @@
 const { ipcRenderer } = require("electron");
 
 window.addEventListener("DOMContentLoaded", () => {
-  // 1 - success autentification data is valid
-  // 2 - erorr autentification data isn't valid
-  // 3 - enter code from main
-  // 4 - authentication finished
-
   ipcRenderer.on("lztInputs", (event, arg) => {
+    // 1 - success autentification data is valid
+    // 2 - erorr autentification data isn't valid
+    // 3 - enter code from main
+    // 4 - authentication finished
     switch (arg) {
       case "1":
         //logging in
@@ -19,15 +18,28 @@ window.addEventListener("DOMContentLoaded", () => {
       case "3":
         document.getElementById("userDataLZT").style.display = "none";
         document.getElementById("authenticationCode").style.display = "block";
-        document.getElementById("panel").style.display = "none";
+        document.getElementById("lztPanel").style.display = "none";
         break;
       case "4":
         document.getElementById("userDataLZT").style.display = "none";
         document.getElementById("authenticationCode").style.display = "none";
-        document.getElementById("panel").style.display = "block";
+        document.getElementById("lztPanel").style.display = "block";
         break;
       case "5":
         document.getElementById("startAdsParse").disabled = false;
+        break;
+    }
+  });
+
+  ipcRenderer.on("funpayInputs", (event, arg) => {
+    // 1 - logged in
+    switch (arg) {
+      case "1":
+        document.getElementById("userDataFunPay").style.display = "none";
+        document.getElementById("funpayPanel").style.display = "block";
+        break;
+      case "2":
+        document.getElementById("").disabled = false;
         break;
     }
   });
@@ -55,8 +67,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector("#lztLogIn").addEventListener("click", function() {
     let accData = {
-      username: document.getElementById("username").value,
-      password: document.getElementById("password").value
+      username: document.getElementById("lztUsername").value,
+      password: document.getElementById("lztPassword").value
     };
 
     let logsData = document.getElementById("logsData");
@@ -68,9 +80,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector("#sendCode").addEventListener("click", function() {
       let code = {
-        code: document.getElementById("code").value
+        code: document.getElementById("lztCode").value
       };
       ipcRenderer.send("code", code);
     });
+  });
+
+  document.querySelector("#funpayLogIn").addEventListener("click", function() {
+    ipcRenderer.send("funpayLogIn");
   });
 });

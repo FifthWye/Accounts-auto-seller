@@ -22,22 +22,25 @@
                     <div id="userDataLZT">
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="username" class="form-control" id="username" placeholder="Username" required>
+                            <input type="username" class="form-control" id="lztUsername" placeholder="Username"
+                                required>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <input type="password" class="form-control" id="lztPassword" placeholder="Password"
+                                required>
                         </div>
                         <input type="submit" name="submit" id="lztLogIn" value="Log in" class="btn btn-lolz">
                     </div>
                     <div id="authenticationCode">
                         <div class="form-group">
                             <label>Code</label>
-                            <input type="text" class="form-control" id="code" placeholder="Code" maxlength="6" required>
+                            <input type="text" class="form-control" id="lztCode" placeholder="Code" maxlength="6"
+                                required>
                         </div>
                         <input type="submit" id="sendCode" value="Send" class="btn btn-lolz">
                     </div>
-                    <div id="panel">
+                    <div id="lztPanel">
                         <input type="submit" id="stopAdsParse" value="Get data about accs : Stop" class="btn btn-stop">
                         <input type="submit" id="startAdsParse" value="Get data about accs : Start"
                             class="btn btn-lolz">
@@ -48,37 +51,10 @@
                 <form onsubmit="return false" class="funPay" novalidate>
                     <img class="logo" src="./assets/funpay_logo.svg" alt="">
                     <div id="userDataFunPay">
-                        <div class="form-group">
-
-                            <label>Username</label>
-                            <input type="username" class="form-control" id="username" placeholder="Username" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password" required>
-                        </div>
-                        <input type="submit" name="submit" id="submit" value="Start" class="btn btn-lolz">
+                        <input type="submit" name="submit" id="funpayLogIn" value="Log in" class="btn btn-primary">
                     </div>
-                    <div id="authenticationCode">
-                        <div class="form-group">
-                            <label>Code</label>
-                            <input type="text" class="form-control" id="code" placeholder="Code" maxlength="6" required>
-                        </div>
-                        <input type="submit" id="sendCode" value="Send" class="btn btn-lolz">
-                    </div>
-                    <div id="panel">
-                        <div class="form-group">
-                            <label>Frequency</label>
-                            <select id="frequency">
-                                <option value="1" selected="selected">Run one iteration</option>
-                                <option value="2">Run every min</option>
-                                <option value="3">Repeat every 5 min</option>
-                                <option value="4">Repeat every 30 min</option>
-                                <option value="5">Repeat every 1 h</option>
-                            </select>
-                        </div>
-                        <input type="submit" id="stop" value="Stop" class="btn btn-stop">
-                        <input type="submit" id="startAdsParse" value="Start" class="btn btn-lolz">
+                    <div id="funpayPanel">
+                        <input type="submit" id="startAdsPublish" value="Publish ads" class="btn btn-primary">
                     </div>
                 </form>
             </div>

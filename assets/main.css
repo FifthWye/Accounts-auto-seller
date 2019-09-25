@@ -110,6 +110,10 @@ textarea {
   cursor: pointer;
 }
 
+.btn {
+  width: 100%;
+}
+
 .btn-lolz:hover,
 .btn-lolz:focus {
   cursor: pointer;
@@ -128,7 +132,11 @@ textarea {
   display: none;
 }
 
-#panel {
+#lztPanel {
+  display: none;
+}
+
+#funpayPanel {
   display: none;
 }
 
