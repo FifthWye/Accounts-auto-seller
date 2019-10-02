@@ -1,7 +1,6 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
-const cheerio = require("cheerio");
 var fs = require("fs");
 const Store = require("electron-store");
 const store = new Store();
@@ -80,7 +79,7 @@ const lztLoginUrl = "/login"; //login page
 const funpayMainUrl = "https://funpay.ru";
 const funpayLoginUrl = "/account/login";
 
-const maxPrice = 455;
+const maxPrice = 320;
 
 const lztSettings = {
   name: "Steam / last activity more than 5 days / seller priority",
@@ -180,7 +179,7 @@ if (!funpayCookiesAreValid) {
   ipcMain.on("funpayLogIn", async (event, arg) => {
     event.sender.send("log", "Please log in using your account on FunPay");
     const browser = await puppeteer.launch({
-      headless: false
+      headless: true
     });
 
     const page = (await browser.pages())[0];
@@ -202,7 +201,7 @@ if (!funpayCookiesAreValid) {
       } catch (error) {}
     }
     const datetime = new Date();
-    store.set("funpayLastLoginDate", datetime);
+    store.set("funpaylastLoginDate", datetime);
     const cookies = await page.cookies();
     store.set("puppeteerFPCookies", cookies);
     event.sender.send("funpayInputs", "1");
@@ -214,7 +213,7 @@ if (!funpayCookiesAreValid) {
   });
 }
 
-//----Main functions----
+//----Main----
 
 if (lztCookiesAreValid) {
   ipcMain.on("lztInputs", async (event, arg) => {
@@ -245,16 +244,31 @@ if (lztCookiesAreValid) {
       await page.waitForNavigation();
       let urlsArr = await getAdsUrls(page, 1); // getting ads urls
       console.log("lzt ads : " + urlsArr);
-      urlsArr = await validateAds(page, urlsArr);
+      let newAccountsData = await validateAds(page, urlsArr);
+      let accountsData;
+      if (fs.existsSync("data.json")) {
+        accountsData = await fs.readFileSync("data.json", "utf8", function(
+          err,
+          data
+        ) {
+          if (err) {
+            throw err;
+          }
+
+          return data;
+        });
+      }
+
       fs.writeFile(
         "data.json",
-        JSON.stringify(urlsArr, null, 4),
+        JSON.stringify(newAccountsData, null, 4),
         "utf8",
         function(err) {
           if (err) throw err;
         }
       );
-      console.log("All data : " + JSON.stringify(urlsArr, null, 4));
+
+      console.log("All data : " + JSON.stringify(newAccountsData, null, 4));
       await browser.close();
       event.sender.send("lztInputs", "5");
       event.sender.send("log", "Finished all ads are parsed");
@@ -262,6 +276,69 @@ if (lztCookiesAreValid) {
     }
   });
 }
+
+ipcMain.on("funpayInputs", async (event, arg) => {
+  event.sender.send("log", "FunPay - Start publishing ads");
+  const browser = await puppeteer.launch({
+    headless: false
+  });
+
+  const page = (await browser.pages())[0];
+  await page.goto(lztMainUrl, {
+    waitUntil: "networkidle2"
+  });
+
+  await page.setCookie(...puppeteerLZTCookies);
+
+  await page.goto(lztMainUrl, {
+    waitUntil: "networkidle2"
+  });
+
+  let accountsData;
+  if (fs.existsSync("dataWithPrices.json")) {
+    accountsData = await fs.readFileSync(
+      "dataWithPrices.json",
+      "utf8",
+      function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        return data;
+      }
+    );
+  } else {
+    event.sender.send("log", "There is no file with accounts data");
+  }
+
+  let accountsJson = JSON.parse(accountsData);
+
+  for (let i = 0; i < accountsJson.length; i++) {
+    if (await checkLolzAd(page, accountsJson[i].lztUrl)) {
+      if (!accountsJson[i].funpayPrice) {
+        accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
+        accountsJson[i].funpayPublishDate = new Date();
+      } else {
+        accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
+      }
+    }
+  }
+
+  fs.writeFile(
+    "dataWithPrices.json",
+    JSON.stringify(accountsJson, null, 4),
+    "utf8",
+    function(err) {
+      if (err) throw err;
+    }
+  );
+
+  await browser.close();
+  event.sender.send("log", "FunPay - Finished publishing");
+  event.sender.send("funpayInputs", "2");
+});
+
+//----Sub functions----
 
 async function getAdsUrls(page, pagesAmount) {
   mainWindow.webContents.send("log", pagesAmount + " pages will be parsed");
@@ -297,8 +374,6 @@ async function getAdsUrls(page, pagesAmount) {
   return adsUrls;
 }
 
-//----Sub functions----
-
 async function validateAds(page, ads) {
   mainWindow.webContents.send("log", "Ads amount - " + ads.length);
 
@@ -320,112 +395,265 @@ async function validateAds(page, ads) {
       await page.click(".button.red");
     }
 
-    let obj = await page.evaluate(() => {
-      const lztPrice = $("span.price").text();
-      const steamUrl = $("span.data").text();
+    try {
+      let obj = await page.evaluate(() => {
+        const lztPrice = $("span.price").text();
+        const steamUrl = $("span.data").text();
 
-      const steamStatsP = [];
-      $(".marketItevView--status.clear")
-        .find("div.statusTitle")
-        .each(function() {
-          const innerText = $(this).text();
-          steamStatsP.push(innerText);
-        });
+        const steamStatsP = [];
+        $(".marketItevView--status.clear")
+          .find("div.statusTitle")
+          .each(function() {
+            const innerText = $(this).text();
+            steamStatsP.push(innerText);
+          });
 
-      const steamStatsN = [];
-      $(".marketItevView--status.ban")
-        .find("div.statusTitle")
-        .each(function() {
-          const innerText = $(this).html();
-          steamStatsN.push(innerText);
-        });
+        const steamStatsN = [];
+        $(".marketItevView--status.ban")
+          .find("div.statusTitle")
+          .each(function() {
+            const innerText = $(this).html();
+            steamStatsN.push(innerText);
+          });
 
-      const actualGames = [];
-      $("li.item").each(function() {
-        let obj = {};
-        let game = $(this)
-          .find("div.fl_l.bold.gameTitle")
-          .text();
-        game = game.replace(/:/g, "");
-        game = game.replace(/\n/g, "");
-        game = game.replace(/\t/g, "");
-        game = game.trim();
-        if (!(game == "")) {
-          const hours = $(this)
-            .find("div.gameHoursPlayed")
+        const actualGamesExists = $("ul.body").length;
+        const actualGames = [];
+        console.log(actualGamesExists);
+        if (actualGamesExists) {
+          $("li.item").each(function() {
+            let obj = {};
+            let game = $(this)
+              .find("div.fl_l.bold.gameTitle")
+              .text();
+            game = game.replace(/:/g, "");
+            game = game.replace(/\n/g, "");
+            game = game.replace(/\t/g, "");
+            game = game.trim();
+            if (!(game == "")) {
+              const hours = $(this)
+                .find("div.gameHoursPlayed")
+                .text();
+              obj.game = game;
+              obj.hours = parseInt(hours);
+              actualGames.push(obj);
+            }
+          });
+        }
+
+        let steamData = {};
+
+        $("div.counter").each(function() {
+          let key = $(this)
+            .find("div.muted")
             .text();
-          obj.game = game;
-          obj.hours = parseInt(hours);
-          actualGames.push(obj);
-        }
-      });
 
-      let steamData = {};
+          key = key.replace(/:/g, "");
+          key = key.replace(/\n/g, "");
+          key = key.replace(/\t/g, "");
+          key = key.replace("CSGO", "csgo");
+          key = key.replace("PUBG", "pubg");
 
-      $("div.counter").each(function() {
-        let key = $(this)
-          .find("div.muted")
-          .text();
-
-        key = key.replace(/:/g, "");
-        key = key.replace(/\n/g, "");
-        key = key.replace(/\t/g, "");
-        key = key.replace("CSGO", "csgo");
-        key = key.replace("PUBG", "pubg");
-
-        key = key.toLowerCase();
-        let words = key.split(" ");
-        key = "";
-        for (let i = 0; i < words.length; i++) {
-          if (i == 0) {
-            words[i] = words[i].charAt(0).toLowerCase() + words[i].slice(1);
-          } else if (i != 0) {
-            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+          key = key.toLowerCase();
+          let words = key.split(" ");
+          key = "";
+          for (let i = 0; i < words.length; i++) {
+            if (i == 0) {
+              words[i] = words[i].charAt(0).toLowerCase() + words[i].slice(1);
+            } else if (i != 0) {
+              words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
+            key += words[i];
           }
-          key += words[i];
+
+          let value = $(this)
+            .find("div:not(.muted)")
+            .text();
+
+          value = value.replace(/\n/g, "");
+          value = value.replace(/\t/g, "");
+
+          if (key == "balance") {
+            steamData[key] = parseInt(value) ? parseInt(value) : 0;
+          } else if (key == "steamLevel") {
+            steamData[key] = parseInt(value);
+          } else if (key == "totalGames") {
+            steamData[key] = parseInt(value);
+          } else if (key == "pubgInventory") {
+            steamData[key] = parseInt(value);
+          } else if (key == "csgoInventory") {
+            steamData[key] = parseInt(value);
+          } else if (key == "dota2Inventory") {
+            steamData[key] = parseInt(value);
+          } else if (key == "country") {
+            if ((value = "╨á╨╛╤ü╤ü╨╕╤Å")) steamData[key] = "Russian Federation";
+          } else {
+            steamData[key] = value;
+          }
+        });
+
+        let obj = {};
+        obj.lztPrice = parseInt(lztPrice);
+        obj.steamUrl = steamUrl;
+        obj.steamData = steamData;
+        obj.actualGames = actualGames;
+        if (steamStatsP.length) {
+          obj.steamStatsP = steamStatsP;
+        }
+        if (steamStatsN.length) {
+          obj.steamStatsN = steamStatsN;
         }
 
-        let value = $(this)
-          .find("div:not(.muted)")
-          .text();
-
-        value = value.replace(/\n/g, "");
-        value = value.replace(/\t/g, "");
-
-        if (key == "balance") {
-          steamData[key] = parseInt(value) ? parseInt(value) : 0;
-        } else if (key == "steamLevel") {
-          steamData[key] = parseInt(value);
-        } else if (key == "totalGames") {
-          steamData[key] = parseInt(value);
-        } else if (key == "pubgInventory") {
-          steamData[key] = parseInt(value);
-        } else if (key == "csgoInventory") {
-          steamData[key] = parseInt(value);
-        } else if (key == "dota2Inventory") {
-          steamData[key] = parseInt(value);
-        } else if (key == "country") {
-          if ((value = "╨á╨╛╤ü╤ü╨╕╤Å")) steamData[key] = "Russian Federation";
-        } else {
-          steamData[key] = value;
-        }
+        return obj;
       });
-
-      let obj = {};
-      obj.lztPrice = parseInt(lztPrice);
-      obj.steamUrl = steamUrl;
-      obj.steamData = steamData;
-      obj.actualGames = actualGames;
-      if (steamStatsP.length) {
-        obj.steamStatsP = steamStatsP;
-      }
-      if (steamStatsN.length) {
-        obj.steamStatsN = steamStatsN;
-      }
-      return obj;
-    });
-    obj.lztUrl = ads[i];
-    adsData.push(obj);
+      obj.lztUrl = ads[i];
+      adsData.push(obj);
+    } catch (error) {}
   }
   return adsData;
+}
+
+async function checkLolzAd(page, url) {
+  await page.goto(url, {
+    waitUntil: "networkidle2"
+  });
+
+  const buyButton = await page.$("a.marketViewItem--buyButton");
+
+  if (buyButton) {
+    await page.click("a.marketViewItem--buyButton"); //buy account
+
+    //----Waiting for check button and clicl it if appears----
+
+    let accountIsReadyToCheck = false;
+
+    while (!accountIsReadyToCheck) {
+      try {
+        await page.waitForSelector(".button.primary._checkAccountButton", {
+          timeout: 25000
+        });
+        accountIsReadyToCheck = true;
+      } catch (error) {}
+    }
+
+    await page.click(".button.primary._checkAccountButton");
+
+    //----Checking if there is no error in closest 10 sec than account valid----
+
+    let accountChecked = false;
+
+    let checkingProcess = true;
+    while (checkingProcess) {
+      const loaderIsHidden = await page.evaluate(() => {
+        let loader = document.querySelector("._itemBuySpinner").style.display;
+        if (loader == "none") {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      checkingProcess = loaderIsHidden;
+    }
+
+    try {
+      await page.waitForSelector("div.errorOverlay", {
+        timeout: 5000
+      });
+    } catch (error) {
+      //----Waiting for refund button and click if appears----
+
+      while (!accountChecked) {
+        try {
+          await page.waitForSelector("a._refundAccountButton", {
+            timeout: 25000
+          });
+          accountChecked = true;
+        } catch (error) {}
+      }
+
+      if (accountChecked) {
+        await page.click("a._refundAccountButton");
+        await page.waitForNavigation();
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  } else {
+    return false;
+  }
+
+  return true;
+}
+
+function calculatePrice(accData) {
+  const half = accData.lztPrice / 2;
+  let price;
+  price = accData.lztPrice * 3;
+  if (accData.funpayPublishDate) {
+    console.log(
+      "already published - " +
+        new Date(accData.funpayPublishDate) +
+        " current date - " +
+        new Date()
+    );
+
+    let publishDatePlusPeriod = new Date(accData.funpayPublishDate);
+    publishDatePlusPeriod.setHours(publishDatePlusPeriod.getHours() + 36); //getting date of publish + 36 hours
+    const oneAndHalfDayPassed = publishDatePlusPeriod < new Date(); //checking if current date is higher
+
+    console.log(
+      "Date when it will be 36 hours after publish - " + publishDatePlusPeriod
+    );
+    console.log("36 h - " + oneAndHalfDayPassed);
+
+    if (accData.funpayPrice != accData.lztPrice + half) {
+      const priceMinusHalf = accData.funpayPrice - half;
+      if (oneAndHalfDayPassed) {
+        const priceOnceMinusHalfThrice = accData.lztPrice * 3 - half * 3;
+        if (accData.funpayPrice != priceOnceMinusHalfThrice) {
+          price = accData.funpayPrice - half;
+        } else {
+          price = accData.funpayPrice;
+        }
+      } else {
+        publishDatePlusPeriod = new Date(accData.funpayPublishDate);
+        publishDatePlusPeriod.setHours(publishDatePlusPeriod.getHours() + 24);
+        const oneDayPassed = publishDatePlusPeriod < new Date();
+        console.log(
+          "Date when it will be 24 hours after publish - " +
+            publishDatePlusPeriod
+        );
+        console.log("24 h - " + oneDayPassed);
+        if (oneDayPassed) {
+          const priceOnceMinusHalfTwice = accData.lztPrice * 3 - half * 2;
+          if (accData.funpayPrice != priceOnceMinusHalfTwice) {
+            price = accData.funpayPrice - half;
+          } else {
+            price = accData.funpayPrice;
+          }
+        } else {
+          publishDatePlusPeriod = new Date(accData.funpayPublishDate);
+          publishDatePlusPeriod.setHours(publishDatePlusPeriod.getHours() + 12);
+          const halfOfDayPassed = publishDatePlusPeriod < new Date();
+          console.log(
+            "Date when it will be 12 hours after publish - " +
+              publishDatePlusPeriod
+          );
+          console.log("12 h - " + halfOfDayPassed);
+          if (halfOfDayPassed) {
+            const priceOnceMinusHalf = accData.lztPrice * 3 - half;
+            if (accData.funpayPrice != priceOnceMinusHalf) {
+              price = accData.funpayPrice - half;
+            } else {
+              price = accData.funpayPrice;
+            }
+          }
+        }
+      }
+    } else {
+      price = accData.funpayPrice;
+    }
+  }
+  return price;
 }

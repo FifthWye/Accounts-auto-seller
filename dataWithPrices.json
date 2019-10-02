@@ -1,0 +1,42 @@
+[
+    {
+        "lztPrice": 50,
+        "steamUrl": "https://steamcommunity.com/profiles/76561198267413316/",
+        "steamData": {
+            "balance": 1,
+            "steamLevel": 2,
+            "totalGames": 3,
+            "lastActivity": "Sep 6, 2019",
+            "csgoLastActivity": "Dec 20, 2015",
+            "accountRegisterIn": "Dec 11, 2015",
+            "csgoInventory": 25,
+            "dota2Inventory": 0,
+            "country": "Russian Federation",
+            "accountOrigin": "Brute"
+        },
+        "actualGames": [
+            {
+                "game": "Team Fortress 2",
+                "hours": 124
+            },
+            {
+                "game": "CSGO + Prime",
+                "hours": 23
+            },
+            {
+                "game": "Dota 2",
+                "hours": 1
+            }
+        ],
+        "steamStatsP": [
+            "There is no steam ban",
+            "There is no Friend & Trade limit"
+        ],
+        "steamStatsN": [
+            "There is VAC"
+        ],
+        "lztUrl": "https://lolzteam.net/market/2503598/",
+        "funpayPrice": 75,
+        "funpayPublishDate": "2019-09-01T10:08:26.999Z"
+    }
+]

@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("lztPanel").style.display = "block";
         break;
       case "5":
-        document.getElementById("startAdsParse").disabled = false;
+        document.getElementById("startLZTAdsParse").disabled = false;
         break;
     }
   });
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("funpayPanel").style.display = "block";
         break;
       case "2":
-        document.getElementById("").disabled = false;
+        document.getElementById("startFPAdsPublish").disabled = false;
         break;
     }
   });
@@ -53,17 +53,24 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document
-    .querySelector("#startAdsParse")
+    .querySelector("#startFPAdsPublish")
     .addEventListener("click", function() {
-      document.getElementById("startAdsParse").disabled = true;
+      document.getElementById("startFPAdsPublish").disabled = true;
+      ipcRenderer.send("funpayInputs", "2");
+    });
+
+  document
+    .querySelector("#startLZTAdsParse")
+    .addEventListener("click", function() {
+      document.getElementById("startLZTAdsParse").disabled = true;
       ipcRenderer.send("lztInputs", "1");
     });
 
-  document.querySelector("#stopAdsParse").addEventListener("click", function() {
-    ipcRenderer.send("stop", "1");
-    document.getElementById("startAdsParse").style.display = "block";
-    document.getElementById("stopAdsParse").style.display = "none";
-  });
+  // document.querySelector("#stopAdsParse").addEventListener("click", function() {
+  //   ipcRenderer.send("stop", "1");
+  //   document.getElementById("startAdsParse").style.display = "block";
+  //   document.getElementById("stopAdsParse").style.display = "none";
+  // });
 
   document.querySelector("#lztLogIn").addEventListener("click", function() {
     let accData = {
