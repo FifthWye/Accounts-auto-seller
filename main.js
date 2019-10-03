@@ -657,3 +657,9 @@ function calculatePrice(accData) {
   }
   return price;
 }
+
+async function funpayPublishAd(page, accData) {
+  await page.goto(url, {
+    waitUntil: "networkidle2"
+  });
+}
