@@ -103,14 +103,14 @@ if (store.get("lztlastLoginDate")) {
   lastLoginDate = new Date(store.get("lztlastLoginDate"));
   lastLoginDate.setDate(lastLoginDate.getDate() + 30);
   lztCookiesAreValid = nowDate <= lastLoginDate;
-  console.log("LZT re-auth date - " + lastLoginDate);
+  //console.log("LZT re-auth date - " + lastLoginDate);
 }
 
 if (store.get("funpaylastLoginDate")) {
   funpaylastLoginDate = new Date(store.get("funpaylastLoginDate"));
   funpaylastLoginDate.setDate(funpaylastLoginDate.getDate() + 30);
   funpayCookiesAreValid = nowDate <= funpaylastLoginDate;
-  console.log("FunPay re-auth date - " + funpaylastLoginDate);
+  //console.log("FunPay re-auth date - " + funpaylastLoginDate);
 }
 
 //----Logging in----
@@ -220,7 +220,7 @@ if (lztCookiesAreValid) {
     event.sender.send("log", "Start");
     if (arg == 1) {
       const browser = await puppeteer.launch({
-        headless: false //browser show / hide
+        headless: true //browser show / hide
       });
       event.sender.send("log", "Creating page to work with.");
       const page = await browser.newPage();
@@ -243,19 +243,40 @@ if (lztCookiesAreValid) {
       await page.click("#SubmitSearchButton");
       await page.waitForNavigation();
       let urlsArr = await getAdsUrls(page, 1); // getting ads urls
-      console.log("lzt ads : " + urlsArr);
       let newAccountsData = await validateAds(page, urlsArr);
       let accountsData;
       if (fs.existsSync("data.json")) {
-        accountsData = await fs.readFileSync("data.json", "utf8", function(
-          err,
-          data
-        ) {
-          if (err) {
-            throw err;
-          }
+        accountsData = JSON.parse(
+          await fs.readFileSync("data.json", "utf8", function(err, data) {
+            if (err) {
+              throw err;
+            }
 
-          return data;
+            return data;
+          })
+        );
+
+        newAccountsData = accountsData.concat(newAccountsData);
+      }
+
+      for (let i0 = 0; i0 < newAccountsData.length; i0++) {
+        const selectedAccount = newAccountsData[i0];
+        let objIndexes = [];
+
+        for (let i1 = 0; i1 < newAccountsData.length; i1++) {
+          if (i1 != i0) {
+            if (newAccountsData[i1].steamUrl === selectedAccount.steamUrl) {
+              objIndexes.push(i1);
+            } else {
+              if (newAccountsData[i1].lztUrl === selectedAccount.lztUrl) {
+                objIndexes.push(i1);
+              }
+            }
+          }
+        }
+
+        objIndexes.forEach(value => {
+          newAccountsData = newAccountsData.slice(0, value);
         });
       }
 
@@ -268,7 +289,6 @@ if (lztCookiesAreValid) {
         }
       );
 
-      console.log("All data : " + JSON.stringify(newAccountsData, null, 4));
       await browser.close();
       event.sender.send("lztInputs", "5");
       event.sender.send("log", "Finished all ads are parsed");
@@ -290,42 +310,64 @@ ipcMain.on("funpayInputs", async (event, arg) => {
 
   await page.setCookie(...puppeteerLZTCookies);
 
-  await page.goto(lztMainUrl, {
+  await page.goto(funpayMainUrl, {
     waitUntil: "networkidle2"
   });
 
-  let accountsData;
-  if (fs.existsSync("dataWithPrices.json")) {
-    accountsData = await fs.readFileSync(
-      "dataWithPrices.json",
-      "utf8",
-      function(err, data) {
-        if (err) {
-          throw err;
-        }
+  await page.setCookie(...puppeteerFPCookies);
 
-        return data;
+  let accountsData;
+  if (fs.existsSync("data.json")) {
+    accountsData = await fs.readFileSync("data.json", "utf8", function(
+      err,
+      data
+    ) {
+      if (err) {
+        throw err;
       }
-    );
+
+      return data;
+    });
   } else {
     event.sender.send("log", "There is no file with accounts data");
   }
 
   let accountsJson = JSON.parse(accountsData);
 
+  let titlesArr = [];
+
+  let notValidAdsIndexes = [];
+
   for (let i = 0; i < accountsJson.length; i++) {
     if (await checkLolzAd(page, accountsJson[i].lztUrl)) {
-      if (!accountsJson[i].funpayPrice) {
-        accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
-        accountsJson[i].funpayPublishDate = new Date();
-      } else {
-        accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
+      accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
+
+      const title = await funpayPublishAd(page, accountsJson[i]);
+      if (title) {
+        titlesArr.push(title);
       }
+
+      accountsJson[i].funpayPublishDate = new Date();
+    } else {
+      notValidAdsIndexes.push(i);
     }
   }
 
+  notValidAdsIndexes.forEach(value => {
+    accountsJson = accountsJson.slice(0, value);
+  });
+
   fs.writeFile(
-    "dataWithPrices.json",
+    "titles.json",
+    JSON.stringify(titlesArr, null, 4),
+    "utf8",
+    function(err) {
+      if (err) throw err;
+    }
+  );
+
+  fs.writeFile(
+    "data.json",
     JSON.stringify(accountsJson, null, 4),
     "utf8",
     function(err) {
@@ -522,68 +564,70 @@ async function checkLolzAd(page, url) {
   if (buyButton) {
     await page.click("a.marketViewItem--buyButton"); //buy account
 
-    //----Waiting for check button and clicl it if appears----
+    //----Waiting for check button and click it if appears----
 
     let accountIsReadyToCheck = false;
+    let errorDetails = false;
 
     while (!accountIsReadyToCheck) {
       try {
-        await page.waitForSelector(".button.primary._checkAccountButton", {
-          timeout: 25000
-        });
+        await page.waitForSelector(".button.primary._checkAccountButton");
         accountIsReadyToCheck = true;
+        await page.waitForSelector("div.errorDetails");
+        errorDetails = true;
       } catch (error) {}
     }
 
-    await page.click(".button.primary._checkAccountButton");
+    if (!errorDetails) {
+      await page.click(".button.primary._checkAccountButton");
 
-    //----Checking if there is no error in closest 10 sec than account valid----
+      //----Checking if there is no error in closest 10 sec than account valid----
 
-    let accountChecked = false;
+      let accountChecked = false;
 
-    let checkingProcess = true;
-    while (checkingProcess) {
-      const loaderIsHidden = await page.evaluate(() => {
-        let loader = document.querySelector("._itemBuySpinner").style.display;
-        if (loader == "none") {
-          return false;
-        } else {
-          return true;
+      let checkingProcess = true;
+      while (checkingProcess) {
+        const loaderIsHidden = await page.evaluate(() => {
+          let loader = document.querySelector("._itemBuySpinner").style.display;
+          if (loader == "none") {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        checkingProcess = loaderIsHidden;
+      }
+
+      try {
+        await page.waitForSelector("div.errorOverlay", {
+          timeout: 5000
+        });
+      } catch (error) {
+        //----Waiting for refund button and click if appears----
+
+        while (!accountChecked) {
+          try {
+            await page.waitForSelector("a._refundAccountButton", {
+              timeout: 25000
+            });
+            accountChecked = true;
+          } catch (error) {}
         }
-      });
-      checkingProcess = loaderIsHidden;
-    }
 
-    try {
-      await page.waitForSelector("div.errorOverlay", {
-        timeout: 5000
-      });
-    } catch (error) {
-      //----Waiting for refund button and click if appears----
-
-      while (!accountChecked) {
-        try {
-          await page.waitForSelector("a._refundAccountButton", {
-            timeout: 25000
-          });
-          accountChecked = true;
-        } catch (error) {}
+        if (accountChecked) {
+          await page.click("a._refundAccountButton");
+          await page.waitForNavigation();
+          return true;
+        } else {
+          return false;
+        }
       }
-
-      if (accountChecked) {
-        await page.click("a._refundAccountButton");
-        await page.waitForNavigation();
-        return true;
-      } else {
-        return false;
-      }
+      return false;
+    } else {
+      return false;
     }
-    return false;
-  } else {
-    return false;
   }
-
-  return true;
+  return false;
 }
 
 function calculatePrice(accData) {
@@ -608,7 +652,6 @@ function calculatePrice(accData) {
     console.log("36 h - " + oneAndHalfDayPassed);
 
     if (accData.funpayPrice != accData.lztPrice + half) {
-      const priceMinusHalf = accData.funpayPrice - half;
       if (oneAndHalfDayPassed) {
         const priceOnceMinusHalfThrice = accData.lztPrice * 3 - half * 3;
         if (accData.funpayPrice != priceOnceMinusHalfThrice) {
@@ -659,7 +702,125 @@ function calculatePrice(accData) {
 }
 
 async function funpayPublishAd(page, accData) {
-  await page.goto(url, {
-    waitUntil: "networkidle2"
-  });
+  const steamAccountsSell = "https://funpay.ru/lots/89/trade"; //steam accounts category
+
+  if (!accData.funpayPublishDate) {
+    //create ad on funpay
+    await page.goto(steamAccountsSell, {
+      waitUntil: "networkidle2"
+    });
+
+    await page.click("button.js-lot-raise");
+
+    await page.click("button.js-lot-offer-edit");
+
+    await page.waitForSelector("input.form-control.lot-field-input");
+
+    let totalGames = "";
+    if (accData.steamData.totalGames > 5) {
+      totalGames = "🎮[Игр всего:" + accData.steamData.totalGames + "]";
+    }
+
+    let actualGamesTitles = "";
+    if (accData.actualGames.length) {
+      if (accData.actualGames.length == 1) {
+        actualGamesTitles = accData.actualGames[0].game;
+        if (accData.actualGames[0].hours > 100) {
+          actualGamesTitles += " (" + accData.actualGames[0].hours + "ч.)";
+        }
+      } else if (accData.actualGames.length == 2) {
+        actualGamesTitles =
+          accData.actualGames[0].game + "/" + accData.actualGames[1].game;
+      } else if (accData.actualGames.length >= 3) {
+        actualGamesTitles =
+          accData.actualGames[0].game +
+          "/" +
+          accData.actualGames[1].game +
+          "/" +
+          accData.actualGames[2].game +
+          "...";
+      }
+    } else {
+    }
+
+    //check if title consist of more than 100 characters
+
+    let adTitle = totalGames + " " + actualGamesTitles;
+
+    if (adTitle.length > 100) {
+      adTitle = adTitle.slice(0, 97) + "...";
+    }
+
+    await page.type("input.form-control.lot-field-input", adTitle);
+
+    let steamBalance = "";
+    if (accData.steamData.balance > 10) {
+      steamBalance = " 💵 Баланс Steam - " + accData.steamData.balance + "\n";
+    }
+
+    let invArr = [];
+    invArr.push(
+      accData.steamData.csgoInventory,
+      accData.steamData.dota2Inventory,
+      accData.steamData.pubgInventory
+    ); //adding all inventories to arr
+
+    invArr = invArr.filter(Boolean); //removing NaN inventories
+
+    const invPriceSum = await invArr.reduce((a, b) => a + b, 0); //sum elements
+
+    let invPrice = "";
+    if (invPriceSum > 10) {
+      invPrice =
+        "👖 Цена скинов,что можно продать, в инвентаре - " + invPriceSum + "\n";
+    }
+
+    let actualGames = "";
+    if (accData.actualGames.length) {
+      actualGames =
+        "🔥 Популярных игр на аккаунте - " + accData.actualGames.length + "\n";
+    }
+
+    let hasVac;
+
+    if (accData.steamStatsN) {
+      hasVac = "";
+
+      for (let i = 0; i < accData.steamStatsN.length; i++) {
+        if (accData.steamStatsN[i] === "There is VAC") {
+          hasVac = "🔴 На аккаунте VAC\n";
+        }
+      }
+    }
+
+    let steamLvl = "🔶 Уровень Steam - " + accData.steamData.steamLvl + "\n";
+
+    const steamDataDesc =
+      steamLvl +
+      "📆 Последняя активность - " +
+      accData.steamData.lastActivity +
+      "\n" +
+      steamBalance +
+      invPrice +
+      actualGames +
+      hasVac
+        ? hasVac
+        : "";
+
+    const adDesc =
+      "🔗 Steam профиль - " +
+      accData.steamUrl +
+      " чтоб посмотреть список игр добавьте - games/?tab=all к ссылке\n" +
+      steamDataDesc;
+
+    await page.type("textarea.form-control.lot-field-input", adDesc);
+
+    const priceFunPay = "" + accData.funpayPrice;
+
+    await page.type("input[name='price']", priceFunPay.toString());
+    return adTitle;
+  } else {
+    //edit price
+    return null;
+  }
 }

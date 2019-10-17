@@ -1,642 +1,45 @@
 [
     {
         "lztPrice": 50,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198267413316/",
+        "steamUrl": "https://steamcommunity.com/profiles/76561198823511416/",
         "steamData": {
-            "balance": 1,
+            "balance": 0,
             "steamLevel": 2,
-            "totalGames": 3,
-            "lastActivity": "Sep 6, 2019",
-            "csgoLastActivity": "Dec 20, 2015",
-            "accountRegisterIn": "Dec 11, 2015",
-            "csgoInventory": 25,
-            "dota2Inventory": 0,
+            "totalGames": 22,
+            "lastActivity": "Jul 20, 2019",
+            "csgoLastActivity": "Oct 31, 2018",
+            "accountRegisterIn": "Mar 18, 2018",
+            "csgoInventory": 228,
             "country": "Russian Federation",
             "accountOrigin": "Brute"
         },
         "actualGames": [
             {
-                "game": "Team Fortress 2",
-                "hours": 124
+                "game": "CSGO + Prime",
+                "hours": 177
             },
             {
-                "game": "CSGO + Prime",
+                "game": "Deceit",
+                "hours": 28
+            },
+            {
+                "game": "H1Z1 King of the Kill",
                 "hours": 23
             },
             {
-                "game": "Dota 2",
-                "hours": 1
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2503598/"
-    },
-    {
-        "lztPrice": 90,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198859311887/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 3,
-            "totalGames": 5,
-            "lastActivity": "Jun 10, 2019",
-            "csgoLastActivity": "Oct 2, 2018",
-            "accountRegisterIn": "Sep 13, 2018",
-            "csgoInventory": 47,
-            "country": "Russian Federation",
-            "accountOrigin": "Resale"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 105
-            },
-            {
-                "game": "World of Tanks Blitz",
-                "hours": 44
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2379121/"
-    },
-    {
-        "lztPrice": 149,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198236779446/",
-        "steamData": {
-            "balance": 3,
-            "steamLevel": 4,
-            "totalGames": 16,
-            "lastActivity": "Feb 11, 2019",
-            "csgoLastActivity": "May 28, 2016",
-            "accountRegisterIn": "Jun 30, 2015",
-            "csgoInventory": 1,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 293
-            },
-            {
-                "game": "Youtubers Life",
-                "hours": 16
-            },
-            {
-                "game": "American Truck Simulator",
-                "hours": 9
-            },
-            {
                 "game": "Unturned",
+                "hours": 7
+            },
+            {
+                "game": "Infestation The New Z",
                 "hours": 1
             },
             {
-                "game": "Dirty Bomb",
-                "hours": 0
-            },
-            {
-                "game": "Heroes & Generals",
-                "hours": 0
-            },
-            {
-                "game": "War Thunder",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2552445/"
-    },
-    {
-        "lztPrice": 250,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198398754013/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 1,
-            "lastActivity": "May 6, 2018",
-            "accountRegisterIn": "Jun 20, 2017",
-            "pubgInventory": 60,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "PUBG",
-                "hours": 124
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2599049/"
-    },
-    {
-        "lztPrice": 240,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198196504341/",
-        "steamData": {
-            "balance": 2,
-            "steamLevel": 6,
-            "totalGames": 21,
-            "lastActivity": "Feb 25, 2016",
-            "csgoLastActivity": "Feb 15, 2016",
-            "accountRegisterIn": "May 14, 2015",
-            "csgoInventory": 45,
-            "dota2Inventory": 0,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 429
-            },
-            {
-                "game": "Dota 2",
-                "hours": 167
-            },
-            {
-                "game": "Unturned",
-                "hours": 25
-            },
-            {
-                "game": "Clicker Heroes",
-                "hours": 18
-            },
-            {
-                "game": "Rocket League",
-                "hours": 13
-            },
-            {
-                "game": "Digger Online",
-                "hours": 11
-            },
-            {
-                "game": "Left 4 Dead 2",
-                "hours": 9
-            },
-            {
-                "game": "PAYDAY The Heist",
-                "hours": 3
-            },
-            {
-                "game": "Warframe",
-                "hours": 2
-            },
-            {
-                "game": "Castle Crashers",
-                "hours": 0
-            },
-            {
-                "game": "Heroes & Generals",
-                "hours": 0
-            },
-            {
-                "game": "War Thunder",
-                "hours": 0
-            },
-            {
-                "game": "Robocraft",
-                "hours": 0
-            },
-            {
-                "game": "Trove",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2596104/"
-    },
-    {
-        "lztPrice": 249,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198441272468/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 1,
-            "totalGames": 6,
-            "lastActivity": "Aug 22, 2019",
-            "accountRegisterIn": "Nov 5, 2017",
-            "pubgInventory": 0,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "GTA V",
-                "hours": 37
-            },
-            {
-                "game": "WRC 7 FIA World Rally Championship",
-                "hours": 23
-            },
-            {
-                "game": "PUBG",
-                "hours": 14
-            },
-            {
-                "game": "EVE Online",
-                "hours": 13
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598990/"
-    },
-    {
-        "lztPrice": 100,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198039771908/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 6,
-            "totalGames": 11,
-            "lastActivity": "Aug 25, 2019",
-            "accountRegisterIn": "Mar 24, 2011",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Sniper Elite 4",
-                "hours": 242
-            },
-            {
-                "game": "Assassin's Creed Syndicate",
-                "hours": 103
-            },
-            {
-                "game": "Mount & Blade Warband",
-                "hours": 91
-            },
-            {
-                "game": "Total War Saga Thrones of Britannia",
-                "hours": 42
-            },
-            {
-                "game": "Spec Ops The Line",
-                "hours": 19
-            },
-            {
-                "game": "The Long Dark",
-                "hours": 14
-            },
-            {
-                "game": "Tannenberg",
-                "hours": 10
-            },
-            {
-                "game": "Mount & Blade With Fire & Sword",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2599016/"
-    },
-    {
-        "lztPrice": 100,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198285170975/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 3,
-            "totalGames": 16,
-            "lastActivity": "Jan 16, 2019",
-            "accountRegisterIn": "Feb 20, 2016",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Clicker Heroes",
-                "hours": 38
-            },
-            {
-                "game": "Stardew Valley",
-                "hours": 21
-            },
-            {
-                "game": "Undertale",
-                "hours": 11
-            },
-            {
-                "game": "Portal 2",
-                "hours": 4
-            },
-            {
-                "game": "Portal",
-                "hours": 4
-            },
-            {
-                "game": "Terraria",
-                "hours": 1
-            },
-            {
-                "game": "Trove",
-                "hours": 0
-            },
-            {
-                "game": "War Thunder",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2599004/"
-    },
-    {
-        "lztPrice": 70,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198831360618/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 1,
-            "totalGames": 2,
-            "lastActivity": "Sep 6, 2019",
-            "accountRegisterIn": "Apr 21, 2018",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Pro Cycling Manager 2018",
-                "hours": 15
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598989/"
-    },
-    {
-        "lztPrice": 250,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198424456760/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 1,
-            "lastActivity": "Aug 30, 2019",
-            "accountRegisterIn": "Sep 22, 2017",
-            "pubgInventory": 338,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "PUBG",
-                "hours": 528
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598987/"
-    },
-    {
-        "lztPrice": 70,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198815569790/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 1,
-            "totalGames": 2,
-            "lastActivity": "Sep 9, 2019",
-            "accountRegisterIn": "Feb 17, 2018",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Rocksmith 2014 Edition - Remastered",
-                "hours": 52
-            },
-            {
                 "game": "Black Squad",
-                "hours": 9
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598976/"
-    },
-    {
-        "lztPrice": 250,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198422172280/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 1,
-            "lastActivity": "Feb 13, 2018",
-            "accountRegisterIn": "Sep 15, 2017",
-            "pubgInventory": 20,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "PUBG",
-                "hours": 257
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598972/"
-    },
-    {
-        "lztPrice": 300,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198251543806/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 6,
-            "totalGames": 40,
-            "lastActivity": "Sep 21, 2019",
-            "csgoLastActivity": "Feb 21, 2018",
-            "accountRegisterIn": "Sep 21, 2015",
-            "csgoInventory": 189,
-            "pubgInventory": 8,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Garry's Mod",
-                "hours": 1628
-            },
-            {
-                "game": "Terraria",
-                "hours": 798
-            },
-            {
-                "game": "CSGO + Prime",
-                "hours": 415
-            },
-            {
-                "game": "ARK Survival Evolved",
-                "hours": 139
-            },
-            {
-                "game": "PUBG",
-                "hours": 65
-            },
-            {
-                "game": "SMITE",
-                "hours": 25
-            },
-            {
-                "game": "Trove",
-                "hours": 17
-            },
-            {
-                "game": "Rust",
-                "hours": 16
-            },
-            {
-                "game": "Black Squad",
-                "hours": 10
-            },
-            {
-                "game": "Robocraft",
                 "hours": 0
             },
             {
-                "game": "War Thunder",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2579489/"
-    },
-    {
-        "lztPrice": 149,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198303372629/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 5,
-            "totalGames": 20,
-            "lastActivity": "Sep 21, 2019",
-            "accountRegisterIn": "May 7, 2016",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Robocraft",
-                "hours": 895
-            },
-            {
-                "game": "ARK Survival Evolved",
-                "hours": 311
-            },
-            {
-                "game": "Dirty Bomb",
-                "hours": 42
-            },
-            {
-                "game": "Besiege",
-                "hours": 6
-            },
-            {
-                "game": "Fallout 4",
-                "hours": 6
-            },
-            {
-                "game": "Totally Accurate Battle Simulator",
-                "hours": 5
-            },
-            {
-                "game": "Subnautica",
-                "hours": 4
-            },
-            {
-                "game": "Crossout",
-                "hours": 2
-            },
-            {
-                "game": "Unturned",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2582847/"
-    },
-    {
-        "lztPrice": 149,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198822898637/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 13,
-            "totalGames": 18,
-            "lastActivity": "Sep 12, 2019",
-            "csgoLastActivity": "Sep 9, 2018",
-            "accountRegisterIn": "Mar 16, 2018",
-            "csgoInventory": 1,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Rocket League",
-                "hours": 0
-            },
-            {
-                "game": "CSGO + Prime",
-                "hours": 0
-            },
-            {
-                "game": "Wallpaper Engine",
-                "hours": 0
-            },
-            {
-                "game": "Black Squad",
+                "game": "Warface",
                 "hours": 0
             },
             {
@@ -644,11 +47,7 @@
                 "hours": 0
             },
             {
-                "game": "Unturned",
-                "hours": 0
-            },
-            {
-                "game": "H1Z1 King of the Kill",
+                "game": "The Culling",
                 "hours": 0
             }
         ],
@@ -659,306 +58,135 @@
         "steamStatsN": [
             "There is VAC"
         ],
-        "lztUrl": "https://lolzteam.net/market/2517675/"
+        "lztUrl": "https://lolzteam.net/market/2686713/",
+        "funpayPrice": 150,
+        "funpayPublishDate": "2019-10-15T22:10:48.522Z"
     },
     {
-        "lztPrice": 320,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198393627382/",
+        "lztPrice": 199,
+        "steamUrl": "https://steamcommunity.com/profiles/76561198974909593/",
         "steamData": {
             "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 3,
-            "lastActivity": "Sep 5, 2019",
-            "accountRegisterIn": "Jun 2, 2017",
-            "pubgInventory": 0,
+            "steamLevel": 31,
+            "totalGames": 0,
+            "lastActivity": "Sep 18, 2019",
+            "accountRegisterIn": "Jul 2, 2019",
             "country": "Russian Federation",
             "accountOrigin": "Brute"
         },
-        "actualGames": [
-            {
-                "game": "TEKKEN 7",
-                "hours": 14
-            },
-            {
-                "game": "PUBG",
-                "hours": 11
-            }
-        ],
+        "actualGames": [],
         "steamStatsP": [
-            "There is no VAC",
             "There is no steam ban",
             "There is no Friend & Trade limit"
         ],
-        "lztUrl": "https://lolzteam.net/market/2543838/"
+        "steamStatsN": [
+            "There is VAC"
+        ],
+        "lztUrl": "https://lolzteam.net/market/2662166/",
+        "funpayPrice": 597,
+        "funpayPublishDate": "2019-10-15T22:11:41.292Z"
     },
     {
-        "lztPrice": 280,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198350673143/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 5,
-            "lastActivity": "Sep 8, 2019",
-            "accountRegisterIn": "Dec 11, 2016",
-            "pubgInventory": 136,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "PUBG",
-                "hours": 252
-            },
-            {
-                "game": "H1Z1 King of the Kill",
-                "hours": 2
-            },
-            {
-                "game": "Hand Simulator",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2543852/"
-    },
-    {
-        "lztPrice": 50,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198197122627/",
+        "lztPrice": 240,
+        "steamUrl": "https://steamcommunity.com/profiles/76561198149493942/",
         "steamData": {
             "balance": 0,
             "steamLevel": 3,
-            "totalGames": 10,
-            "lastActivity": "Jan 27, 2016",
-            "csgoLastActivity": "Dec 15, 2015",
-            "accountRegisterIn": "May 17, 2015",
-            "csgoInventory": 244,
+            "totalGames": 22,
+            "lastActivity": "Aug 12, 2017",
+            "accountRegisterIn": "Aug 11, 2014",
+            "dota2Inventory": 328,
             "country": "Russian Federation",
             "accountOrigin": "Brute"
         },
         "actualGames": [
             {
-                "game": "CSGO + Prime",
-                "hours": 168
-            },
-            {
-                "game": "Robocraft",
-                "hours": 0
-            },
-            {
-                "game": "Unturned",
-                "hours": 0
+                "game": "Dota 2",
+                "hours": 1095
             },
             {
                 "game": "War Thunder",
                 "hours": 0
             },
             {
-                "game": "Clicker Heroes",
+                "game": "Unturned",
+                "hours": 0
+            },
+            {
+                "game": "Heroes & Generals",
+                "hours": 0
+            },
+            {
+                "game": "Warframe",
                 "hours": 0
             }
         ],
         "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
+            "There is no VAC",
+            "There is no steam ban"
         ],
         "steamStatsN": [
-            "There is VAC"
+            "There is Friend &amp; Trade limit"
         ],
-        "lztUrl": "https://lolzteam.net/market/2547132/"
-    },
-    {
-        "lztPrice": 50,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198256231281/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 1,
-            "lastActivity": "Oct 31, 2015",
-            "accountRegisterIn": "Oct 20, 2015",
-            "csgoInventory": 25,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 39
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2393801/"
-    },
-    {
-        "lztPrice": 50,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198260372239/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 3,
-            "lastActivity": "Nov 29, 2015",
-            "accountRegisterIn": "Nov 13, 2015",
-            "csgoInventory": 9,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 12
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2393737/"
-    },
-    {
-        "lztPrice": 50,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198867543962/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 1,
-            "totalGames": 2,
-            "lastActivity": "Dec 2, 2018",
-            "csgoLastActivity": "Nov 18, 2018",
-            "accountRegisterIn": "Oct 26, 2018",
-            "csgoInventory": 5,
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "CSGO + Prime",
-                "hours": 13
-            }
-        ],
-        "steamStatsP": [
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "steamStatsN": [
-            "There is VAC"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2433501/"
+        "lztUrl": "https://lolzteam.net/market/2683192/",
+        "funpayPrice": 720,
+        "funpayPublishDate": "2019-10-15T22:12:33.793Z"
     },
     {
         "lztPrice": 100,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198071592208/",
+        "steamUrl": "https://steamcommunity.com/profiles/76561198035905817/",
         "steamData": {
             "balance": 0,
-            "steamLevel": 4,
-            "totalGames": 17,
-            "lastActivity": "Apr 26, 2019",
-            "accountRegisterIn": "Sep 14, 2012",
+            "steamLevel": 5,
+            "totalGames": 29,
+            "lastActivity": "Sep 8, 2019",
+            "accountRegisterIn": "Dec 28, 2010",
             "country": "Russian Federation",
             "accountOrigin": "Brute"
         },
         "actualGames": [
             {
-                "game": "Path of Exile",
-                "hours": 618
+                "game": "Euro Truck Simulator 2",
+                "hours": 75
             },
             {
-                "game": "Saints Row The Third",
+                "game": "Warframe",
                 "hours": 26
             },
             {
-                "game": "Fallout Shelter",
-                "hours": 19
+                "game": "HELLDIVERS A New Hell Edition",
+                "hours": 26
             },
             {
-                "game": "Skyrim",
-                "hours": 0
+                "game": "Left 4 Dead",
+                "hours": 18
             },
             {
-                "game": "The Elder Scrolls V Skyrim Special Edition",
-                "hours": 0
+                "game": "Path of Exile",
+                "hours": 8
             },
             {
-                "game": "Fallout 3",
-                "hours": 0
-            }
-        ],
-        "steamStatsP": [
-            "There is no VAC",
-            "There is no steam ban",
-            "There is no Friend & Trade limit"
-        ],
-        "lztUrl": "https://lolzteam.net/market/2598950/"
-    },
-    {
-        "lztPrice": 80,
-        "steamUrl": "https://steamcommunity.com/profiles/76561198398632469/",
-        "steamData": {
-            "balance": 0,
-            "steamLevel": 2,
-            "totalGames": 14,
-            "lastActivity": "Sunday at 8:17 PM",
-            "accountRegisterIn": "Jun 23, 2017",
-            "country": "Russian Federation",
-            "accountOrigin": "Brute"
-        },
-        "actualGames": [
-            {
-                "game": "Far Cry 5",
-                "hours": 96
-            },
-            {
-                "game": "Wolfenstein II The New Colossus",
-                "hours": 70
-            },
-            {
-                "game": "Wolfenstein Youngblood",
-                "hours": 33
-            },
-            {
-                "game": "S.T.A.L.K.E.R. Shadow of Chernobyl",
-                "hours": 30
-            },
-            {
-                "game": "The Evil Within 2",
-                "hours": 29
-            },
-            {
-                "game": "RESIDENT EVIL 7 biohazard / BIOHAZARD 7 resident evil",
-                "hours": 23
-            },
-            {
-                "game": "Shadow of the Tomb Raider",
-                "hours": 21
-            },
-            {
-                "game": "Metro 2033 Redux",
-                "hours": 21
-            },
-            {
-                "game": "Left 4 Dead 2",
+                "game": "Warhammer End Times - Vermintide",
                 "hours": 7
             },
             {
-                "game": "Prey",
+                "game": "Left 4 Dead 2",
+                "hours": 4
+            },
+            {
+                "game": "SPORE",
+                "hours": 4
+            },
+            {
+                "game": "Borderlands 2",
                 "hours": 1
             },
             {
-                "game": "Rise of the Tomb Raider",
-                "hours": 1
+                "game": "Sniper Ghost Warrior 3",
+                "hours": 0
             },
             {
-                "game": "Metro Last Light Redux",
+                "game": "FOR HONOR",
                 "hours": 0
             }
         ],
@@ -967,6 +195,8 @@
             "There is no steam ban",
             "There is no Friend & Trade limit"
         ],
-        "lztUrl": "https://lolzteam.net/market/2598928/"
+        "lztUrl": "https://lolzteam.net/market/2693192/",
+        "funpayPrice": 300,
+        "funpayPublishDate": "2019-10-15T22:13:27.084Z"
     }
 ]
