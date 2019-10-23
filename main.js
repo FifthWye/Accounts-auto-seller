@@ -179,7 +179,7 @@ if (!funpayCookiesAreValid) {
   ipcMain.on("funpayLogIn", async (event, arg) => {
     event.sender.send("log", "Please log in using your account on FunPay");
     const browser = await puppeteer.launch({
-      headless: true
+      headless: false
     });
 
     const page = (await browser.pages())[0];
@@ -243,7 +243,7 @@ if (lztCookiesAreValid) {
       await page.click("#SubmitSearchButton");
       await page.waitForNavigation();
       let urlsArr = await getAdsUrls(page, 1); // getting ads urls
-      let newAccountsData = await validateAds(page, urlsArr);
+      let newAccountsData = await parseAds(page, urlsArr);
       let accountsData;
       if (fs.existsSync("data.json")) {
         accountsData = JSON.parse(
@@ -334,18 +334,16 @@ ipcMain.on("funpayInputs", async (event, arg) => {
 
   let accountsJson = JSON.parse(accountsData);
 
-  let titlesArr = [];
-
   let notValidAdsIndexes = [];
+  let descriptions = [];
 
   for (let i = 0; i < accountsJson.length; i++) {
     if (await checkLolzAd(page, accountsJson[i].lztUrl)) {
       accountsJson[i].funpayPrice = calculatePrice(accountsJson[i]);
 
-      const title = await funpayPublishAd(page, accountsJson[i]);
-      if (title) {
-        titlesArr.push(title);
-      }
+      desc = await funpayPublishAd(page, accountsJson[i]);
+
+      descriptions.push(desc);
 
       accountsJson[i].funpayPublishDate = new Date();
     } else {
@@ -358,8 +356,8 @@ ipcMain.on("funpayInputs", async (event, arg) => {
   });
 
   fs.writeFile(
-    "titles.json",
-    JSON.stringify(titlesArr, null, 4),
+    "desc.json",
+    JSON.stringify(descriptions, null, 4),
     "utf8",
     function(err) {
       if (err) throw err;
@@ -416,7 +414,7 @@ async function getAdsUrls(page, pagesAmount) {
   return adsUrls;
 }
 
-async function validateAds(page, ads) {
+async function parseAds(page, ads) {
   mainWindow.webContents.send("log", "Ads amount - " + ads.length);
 
   //object example - {lztUrl:"url", lztPrice:"price", steamUrl:"url", steamLvl:"lvl", steamBalance:"balance", steamGamesAmount:"amount", csgoRank:"rank", steamCsgoInvValue:"value", steamPubgInvValue:"value",}
@@ -554,6 +552,13 @@ async function validateAds(page, ads) {
   return adsData;
 }
 
+async function funpayEditPrice(page, url) {
+  await page.goto(url, {
+    waitUntil: "networkidle2"
+  });
+
+}
+
 async function checkLolzAd(page, url) {
   await page.goto(url, {
     waitUntil: "networkidle2"
@@ -599,9 +604,7 @@ async function checkLolzAd(page, url) {
       }
 
       try {
-        await page.waitForSelector("div.errorOverlay", {
-          timeout: 5000
-        });
+        await page.waitForSelector("div.errorOverlay");
       } catch (error) {
         //----Waiting for refund button and click if appears----
 
@@ -718,7 +721,7 @@ async function funpayPublishAd(page, accData) {
 
     let totalGames = "";
     if (accData.steamData.totalGames > 5) {
-      totalGames = "🎮[Игр всего:" + accData.steamData.totalGames + "]";
+      totalGames = "⚡[Игр всего:" + accData.steamData.totalGames + "]";
     }
 
     let actualGamesTitles = "";
@@ -741,11 +744,29 @@ async function funpayPublishAd(page, accData) {
           "...";
       }
     } else {
+      if(accData.steamStatsP.length) {
+        let noLimits = "";
+        for(let i = 0; i < accData.steamStatsP.length; i++){
+          if (accData.steamStatsP[i] === "There is no Friend & Trade limit") {
+            noLimits = "NoLimit";
+          }
+        }
+        actualGamesTitles += noLimits;
+      }
+      if(accData.steamData.steamLevel > 5) {
+        actualGamesTitles += "[" + accData.steamData.steamLevel + "]"
+      }
+
+      
+    if (accData.steamData.balance > 10) {
+      actualGamesTitles += "[💵 Баланс:" + accData.steamData.balance + "]";
+    }
+      
     }
 
     //check if title consist of more than 100 characters
 
-    let adTitle = totalGames + " " + actualGamesTitles;
+    let adTitle = totalGames + actualGamesTitles;
 
     if (adTitle.length > 100) {
       adTitle = adTitle.slice(0, 97) + "...";
@@ -781,10 +802,9 @@ async function funpayPublishAd(page, accData) {
         "🔥 Популярных игр на аккаунте - " + accData.actualGames.length + "\n";
     }
 
-    let hasVac;
+    let hasVac = "";
 
     if (accData.steamStatsN) {
-      hasVac = "";
 
       for (let i = 0; i < accData.steamStatsN.length; i++) {
         if (accData.steamStatsN[i] === "There is VAC") {
@@ -803,9 +823,7 @@ async function funpayPublishAd(page, accData) {
       steamBalance +
       invPrice +
       actualGames +
-      hasVac
-        ? hasVac
-        : "";
+      hasVac;
 
     const adDesc =
       "🔗 Steam профиль - " +
@@ -818,7 +836,8 @@ async function funpayPublishAd(page, accData) {
     const priceFunPay = "" + accData.funpayPrice;
 
     await page.type("input[name='price']", priceFunPay.toString());
-    return adTitle;
+    //await page.click("button.btn.btn-primary.js-btn-save");
+    return adDesc;
   } else {
     //edit price
     return null;
